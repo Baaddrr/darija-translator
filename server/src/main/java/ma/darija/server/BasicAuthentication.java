@@ -1,7 +1,6 @@
 package ma.darija.server;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.security.enterprise.AuthenticationException;
 import jakarta.security.enterprise.AuthenticationStatus;
 import jakarta.security.enterprise.CallerPrincipal;
 import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
@@ -9,7 +8,6 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageCont
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.StandardCharsets;
@@ -24,19 +22,20 @@ public class BasicAuthentication implements HttpAuthenticationMechanism {
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response,
-                                                HttpMessageContext context) throws AuthenticationException {
+                                                HttpMessageContext context) {
         if (!context.isProtected()) {
             return context.doNothing();
         }
         if (username == null || username.isBlank() || username.contains(":") || password == null || password.isBlank()) {
-            return reject(response, 503, "auth_unavailable", "Service authentication is not configured.");
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            return AuthenticationStatus.SEND_FAILURE;
         }
         if (matches(request.getHeader("Authorization"))) {
             return context.notifyContainerAboutLogin(new CallerPrincipal(username), Set.of());
         }
 
         response.setHeader("WWW-Authenticate", "Basic realm=\"Darija Translator\", charset=\"UTF-8\"");
-        return reject(response, 401, "unauthorized", "Enter valid API credentials.");
+        return context.responseUnauthorized();
     }
 
     private boolean matches(String authorization) {
@@ -63,16 +62,4 @@ public class BasicAuthentication implements HttpAuthenticationMechanism {
                 supplied.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static AuthenticationStatus reject(HttpServletResponse response, int status, String code, String message)
-            throws AuthenticationException {
-        response.setStatus(status);
-        response.setContentType("application/json;charset=UTF-8");
-        try {
-            response.getWriter().write(ApiFailure.body(code, message).toString());
-            response.flushBuffer();
-        } catch (IOException exception) {
-            throw new AuthenticationException(exception);
-        }
-        return AuthenticationStatus.SEND_FAILURE;
-    }
 }

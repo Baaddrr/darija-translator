@@ -14,7 +14,8 @@ Backend checkpoint, 2026-11-24. The repository was initialized locally. The API 
 ## Verification
 
 - JDK 17.0.19 and Maven 3.9.16 compiled the server and ran 26 tests. All passed. The provider tests use an ephemeral loopback mock for payload, Unicode, parsing, errors, rate limit, and a stalled response body.
-- Maven packaged `server/target/darija.war` after resolving the packaging dependencies. Deployed that WAR on WildFly 42.0.0.Beta1 and ran `python scripts/test-api.py --api http://127.0.0.1:8260/darija/api`. Public liveness, 401 challenges, authenticated validation, body and media-type limits, and the missing-key 503 all passed. The temporary server was shut down after the checks.
+- Maven packaged `server/target/darija.war` after resolving the packaging dependencies. Deployed that WAR on WildFly 42.0.0.Beta1 and ran `python scripts/test-api.py --api http://127.0.0.1:8260/darija/api`. Public liveness, JSON 401 challenges, authenticated validation, body and media-type limits, and the missing-key 503 all passed.
+- After routing authentication errors through the container error dispatch, the deployed checks passed again. The server log contained no request exception, smoke-test credentials, or source text. The temporary server was shut down.
 - The local shell defaults to Java 8. Set `JAVA_HOME` to `C:\Users\asus\.jdks\ms-17.0.19` before using Maven or WildFly on this host. The installed WildFly is `C:\Program Files\wildfly-42.0.0.Beta1`. Maven 3.9.16 is available under `C:\Users\asus\.m2\wrapper\dists\apache-maven-3.9.16`.
 - A live Gemini translation requires `GEMINI_API_KEY`. Run `python scripts/test-api.py --live` with the deployed backend and matching test-shell Basic credentials. Account quota and natural Darija output still require live verification.
 

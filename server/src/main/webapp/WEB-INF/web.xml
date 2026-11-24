@@ -15,4 +15,12 @@
             <url-pattern>/api/health</url-pattern>
         </web-resource-collection>
     </security-constraint>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/errors/authentication</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/errors/authentication</location>
+    </error-page>
 </web-app>
