@@ -1,0 +1,3 @@
+if (outcome != success) of /subsystem=undertow/application-security-domain=darija-translator:read-resource
+    /subsystem=undertow/application-security-domain=darija-translator:add(security-domain=ApplicationDomain, integrated-jaspi=false, enable-jaspi=true)
+end-if

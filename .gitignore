@@ -1,0 +1,11 @@
+target/
+node_modules/
+.expo/
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+.idea/
+*.iml
