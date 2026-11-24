@@ -1,5 +1,7 @@
 # Darija Translator
 
+Public source repository: [Baaddrr/darija-translator](https://github.com/Baaddrr/darija-translator).
+
 A Jakarta REST service that uses Google Gemini to translate into Moroccan Darija. The Java service owns provider access. Chrome, PHP, Python and React Native clients are planned around the same HTTP API. See the current [project status](docs/PROGRESS.md) and [acceptance criteria](docs/REQUIREMENTS.md).
 
 ## Run the Java backend

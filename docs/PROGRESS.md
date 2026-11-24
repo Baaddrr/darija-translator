@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Backend checkpoint, 2026-11-24. The repository was initialized locally. The API contract is documented and the next implementation task is the Chrome extension.
+Backend checkpoint, 2026-11-24. The API contract is documented and the next implementation task is the Chrome extension. The user authorized publication to the public GitHub repository [Baaddrr/darija-translator](https://github.com/Baaddrr/darija-translator), configured as `origin`.
 
 ## Completed
 
@@ -24,4 +24,4 @@ Backend checkpoint, 2026-11-24. The repository was initialized locally. The API 
 1. Implement and verify the Manifest V3 Chrome side-panel client as described in [HANDOFF.md](HANDOFF.md).
 2. Implement and verify PHP, PySide6 and React Native clients. Verify all four clients with a deployed backend.
 3. Complete PlantUML class and deployment diagrams, all client instructions, demo outline, and final requirements audit.
-4. Track the assignment's recorded demo and shared GitHub repository through completion with the user. Checkpoints are local.
+4. Track the assignment's recorded demo through completion with the user. The public GitHub repository contains the completed backend checkpoint. Client projects and final deliverables remain pending.
